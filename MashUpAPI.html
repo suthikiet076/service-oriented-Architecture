@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> OpenWeather - Yandex API Mashup</title>
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous">
+      
+    </script>
+    <style>
+      p {
+          color: red;
+          font-family: verdana;
+          font-size: 150%;
+          border: 3px solid powderblue;
+          padding: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+    <input type="text" name="url" id="url" value="">
+    </div>
+    <br>
+    <div>
+    <button type="button" name="go" id="go" onclick="goOpenWeather()">Go</button>
+    </div>
+    <br>
+    <select name="Lang" id="Lang">
+      <option value="th">THAI</option>
+      <option value="id">INDONESIAN</option>
+      <option value="ja">JAPANESE</option>
+      <option value="ru">RUSSIAN</option>
+      <option value="zh">CHINESE</option>
+      <option value="ms">MALAY</option>
+    </select>
+    <br>
+    <p id="weather_result1"> 
+    </p>
+    <p id="weather_result2"> 
+    </p>
+    <p id="weather_result3"> 
+    </p>
+    <p> TRANSLATE </p>
+    <p id="translate_result1">
+    </p>
+    <p id="translate_result2">
+    </p>
+    <script type="text/javascript">
+
+    function goOpenWeather() {
+      var Text = $('#url').val();
+      var OpenWeatherUrl =
+      "http://api.openweathermap.org/data/2.5/weather?q="+Text+"&appid=2d06ab6c40757b1d2349d6d35807c47f&&units=metric";
+      console.log(OpenWeatherUrl);
+      $.ajax({
+                url: OpenWeatherUrl,
+                method: 'GET'
+              }).then(function(response) {
+                  console.log(response.weather[0].main);
+                  $('#weather_result1').text("Main : "+response.weather[0].main);
+                  $('#weather_result2').text("Description : "+response.weather[0].description);
+                  $('#weather_result3').text("Temperature : "+ response.main.temp + " Celcius");
+                  goTranslate(response.weather[0].main);
+                  goTranslate2(response.weather[0].description);
+              });
+    }
+
+    function goTranslate(sourceText) {
+      var lang = $('#Lang').val();
+      var translateUrl =
+      "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170313T041514Z.ed479ba7f830e2be.55e2ff4335f46c5e4bd8c7b04fd782e4f2935ec1&text="
+      + sourceText +
+      "&lang=en-"+lang;
+      console.log(lang);
+      console.log(translateUrl);
+      $.ajax({
+                url: translateUrl,
+                method: 'GET'
+              }).then(function(response) {
+                  console.log(response.text[0]);
+                  $('#translate_result1').text("Main : "+response.text[0]);
+              });
+    }
+    function goTranslate2(sourceText) {
+      var lang = $('#Lang').val();
+      var translateUrl =
+      "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170313T041514Z.ed479ba7f830e2be.55e2ff4335f46c5e4bd8c7b04fd782e4f2935ec1&text="
+      + sourceText +
+      "&lang=en-"+lang;
+      console.log(lang);
+      console.log(translateUrl);
+      $.ajax({
+                url: translateUrl,
+                method: 'GET'
+              }).then(function(response) {
+                  console.log(response.text[0]);
+                  $('#translate_result2').text("Description : "+response.text[0]);
+              });
+    }
+    </script>
+  </body>
+</html>
