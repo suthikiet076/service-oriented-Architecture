@@ -17,17 +17,25 @@
           border: 3px solid powderblue;
           padding: 3px;
       }
+      h1{
+          color: red;
+          font-family: verdana;
+          font-size: 200%;
+      }
     </style>
   </head>
   <body>
+    <h1> Weather NOW : every place current weather </h1>
     <div>
+    <h2> Input Province or state name </h2> 
     <input type="text" name="url" id="url" value="">
     </div>
     <br>
     <div>
-    <button type="button" name="go" id="go" onclick="goOpenWeather()">Go</button>
+    <button type="button" name="go" id="go" onclick="goOpenWeather()">Search</button>
     </div>
     <br>
+    <h2> Translate To :  </h2>
     <select name="Lang" id="Lang">
       <option value="th">THAI</option>
       <option value="id">INDONESIAN</option>
@@ -43,7 +51,7 @@
     </p>
     <p id="weather_result3"> 
     </p>
-    <p> TRANSLATE </p>
+    <h2> TRANSLATE </h2>
     <p id="translate_result1">
     </p>
     <p id="translate_result2">
